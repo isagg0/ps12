@@ -14,7 +14,7 @@ p {font-size: 16px;}
 .margin {margin-bottom: 30px;}
 
 a {
-  color: #000000;
+  color: #F1EFE7;
 }
 
 .container-fluid {
@@ -41,11 +41,11 @@ nav {
 }
 
 .nav-link {
-  border: 3px outset #a3a3a3;
+  border: 3px outset #FF8C42;
   border-radius: 20px;
   padding: 10px 30px;
-  background-color: #a3a3a3;
-  color: #EEE7E8;
+  background-color: #FF8C42;
+  color: #000000;
   transition: 0.3s;
 }
 
