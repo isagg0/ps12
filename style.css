@@ -50,10 +50,10 @@ nav {
 }
 
 .nav-link:hover {
-  border: 3px outset #FFFFFF;
+  border: 3px outset #FF8C42;
   border-radius: 20px;
   padding: 10px 30px;
-  background-color: #a3a3a3;
+  background-color: #F1EFE7;
   transition: 0.3s;
 }
 
