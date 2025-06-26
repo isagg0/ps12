@@ -10,7 +10,7 @@ body {
   padding: 2% 10%;;
 }
 
-p {font-size: 16px;}
+p {font-size: 20px;}
 .margin {margin-bottom: 30px;}
 
 a {
@@ -96,7 +96,7 @@ code {
 
 .caption {
   color: gray;
-  font-size: 16px;
+  font-size: 20px;
   text-align: center;
   font-style: italic;
 }
