@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/arduino-light.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/arduino.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script> 
+
 <title>PHYS-s12: Intro to Digital Fabrication</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="../style.css" rel="stylesheet">
@@ -49,8 +54,8 @@ Then I decided to start by using Fusion to design the set up of my sculpture. Af
 <p class = "margin"></p>
 For the code I wanted the DC motor to slowly spin while the button was pressed. 
 <p>final code:<p>
+
 <pre><code>
-```c++
 const int s = D0;  // speed
 const int d = D1;  // direction
 const int buttonPin = D2; // button pin
@@ -85,8 +90,9 @@ void motorA(byte d, int s) {
     digitalWrite(d, LOW);
   }
 }
-</code></pre>
-<h5>Circuit schematic diagram</h5>
+</code></pre>  
+
+<h5>Circuit schematic diagram:</h5>
 <img src="./schematic diagram.png" alt="schematic diagram" width="700">
 
 </div>
