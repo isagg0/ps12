@@ -45,6 +45,48 @@ Then I decided to start by using Fusion to design the set up of my sculpture. Af
 </div>
 <p class="margin">   </p>
 
+<br>
+<p class = "margin"></p>
+For the code I wanted the DC motor to slowly spin while the button was pressed. 
+<p>final code:<p>
+<pre><code>
+```c++
+const int s = D0;  // speed
+const int d = D1;  // direction
+const int buttonPin = D2; // button pin
+
+const int freq = 5000;
+const int resolution = 8;
+
+void setup() {
+  pinMode(s, OUTPUT); // outputs
+  pinMode(d, OUTPUT);
+  pinMode(buttonPin, INPUT);
+
+  ledcAttach(s, freq, resolution);
+  ledcWrite(d, 0);   // motors off 
+}
+
+void loop() {
+  int buttonState = digitalRead(buttonPin);
+  if (buttonState == HIGH) {
+    motorA(HIGH, 63); // run when button is pressed
+  } else {
+    motorA(HIGH, 0); // stop if button not pressed
+  }
+}
+
+void motorA(byte d, int s) {
+  if (d == 1) {
+    ledcWrite(s, 255 - s); 
+    digitalWrite(d, HIGH); 
+  } else if (d == 0) {
+    ledcWrite(s, s); 
+    digitalWrite(d, LOW);
+  }
+}
+</code></pre>
+
 </div>
 </xmp>
 </body>
