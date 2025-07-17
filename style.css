@@ -10,6 +10,14 @@ body {
   padding: 2% 10%;;
 }
 
+.note-block {
+  background-color: #FF8C42; /* Replace with your desired color */
+  padding: 16px;
+  margin: 20px 0;
+  border-radius: 8px;
+  font-family: sans-serif;
+}
+
 p {font-size: 20px;}
 .margin {margin-bottom: 30px;}
 

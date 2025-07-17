@@ -29,13 +29,16 @@
 
 <h4>Assignment 2: [Use + Calibrate Another Sensor]</h4>
 <img src="./tof-sensor.jpeg" alt="sensor" width="250">
-<img src="./circuit-tof.png" alt="circuit" width="250">
-
+<br>
 <p class = "margin"></p>
 I used the VL53L1X Tof distance sensor, which is a sensor that uses laser to calculate the distance between the object and the sensor itself.
+<br>
+<img src="./circuit-tof.png" alt="circuit" width="400">
+<br>
+
 <pre><code class="language-arduino">
-#include <Wire.h>
-#include <Adafruit_VL53L1X.h>
+#include < Wire.h >
+#include < Adafruit_VL53L1X.h >
 int SDApin = D1;
 int SCLpin = D0;
 Adafruit_VL53L1X vl53 = Adafruit_VL53L1X();
@@ -74,6 +77,26 @@ void loop() {
 }
 
 </code></pre>
+
+<br>
+<div class="note-block">
+  <p><strong>Notes:</strong></p>
+  <ul>
+    <li>Connecting to 3.3v instead of 5v because the device runs at 3.3</li>
+    <li>SDA = data pin -> D1</li>
+    <li>SCL = clock -> D0</li>
+  </ul>
+  <p><strong>Code explanation:</strong></p>
+  <ul>
+    <li>For the code to be more effective and less complex I had to download the sensor’s library (Adafruit VL53L1X Library)</li>
+    <li>Then this is the first thing that I declared in the code</li>
+    <li>Next I created a ...</li>
+    <li>What the code is doing: measuring the distance between the sensor and an object every 200 milliseconds</li>
+    <li>Then I applied the <code>millis()</code> function by setting the interval to 200ms</li>
+    <li><code>Wire.begin()</code> just uses the pins connected to the sensor to specify where the data should come from</li>
+    <li><code>Serial.print()</code> is just printing down all the data collected</li>
+  </ul>
+</div>
 
 </div>
 </xmp>
