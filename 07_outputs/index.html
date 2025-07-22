@@ -44,7 +44,7 @@ Then I moved on and started to make a timer out of my setup. I followed a tutori
   <source src="./vid-tim3.MOV" type="video/quicktime">
 </video>
 <p class = "margin"></p>
-This version of the timer functions with a start/pause, increase and decrease buttons. When the timer is up the screen says Time's Up and the LED lights up. For my final product there will be a speaker attached to it and it will not only signal when it is done but give a warning before in order to signal the person to check.
+This version of the timer functions with a start/pause, increase and decrease buttons. When the timer is up the screen says Time's Up and the LED lights up. For my final product there will be a speaker attached to it and it will not only signal when it is done but give a warning before in order to signal the person to check before the timer is actually over. 
 <br>
 <br>
 <br>
@@ -171,10 +171,135 @@ void loop() {
 
 </code></pre>
 
+<br>
+<div class="note-block">
+  <p><strong>Code:</strong></p>
+  <ul>
+    <li><pre><code class="language-arduino">
+#include < Wire.h>
+#include < LiquidCrystal_I2C.h>
 
-<pre><code class="language-arduino">
+#define SDA_PIN SDA  
+#define SCL_PIN SCL  
 
-</code></pre>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+// Button pins
+const int startStopBtn = D0; 
+const int incBtn       = D1; 
+const int decBtn       = D2; 
+
+// LED pin
+const int ledPin = D7; 
+
+int minutes = 0;
+int seconds = 0;
+bool running = false;
+bool timeUp = false;
+unsigned long lastUpdate = 0;
+
+void setup() {
+  Wire.begin(SDA_PIN, SCL_PIN);
+  lcd.init();
+  lcd.backlight();
+  lcd.setCursor(0, 0);
+  lcd.print("Timer Ready");
+
+  pinMode(startStopBtn, INPUT_PULLUP);
+  pinMode(incBtn, INPUT_PULLUP);
+  pinMode(decBtn, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+  digitalWrite(ledPin, LOW);
+
+  Serial.begin(115200);
+}
+
+void loop() {
+  static bool lastStartStop = HIGH;
+  static bool lastInc = HIGH;
+  static bool lastDec = HIGH;
+
+  bool startStop = digitalRead(startStopBtn);
+  bool inc = digitalRead(incBtn);
+  bool dec = digitalRead(decBtn);
+
+  // Start/Stop Button
+  if (startStop == LOW && lastStartStop == HIGH) {
+    if (!timeUp) {
+      running = !running;
+      Serial.println(running ? "Started" : "Stopped");
+
+      // Clear "TIME'S UP!" if restarting
+      if (timeUp) {
+        timeUp = false;
+        digitalWrite(ledPin, LOW);
+        lcd.setCursor(0, 1);
+        lcd.print("                "); // Clear line
+      }
+    }
+    delay(200);
+  }
+
+  // Increase Time
+  if (inc == LOW && lastInc == HIGH && !running && !timeUp) {
+    minutes++;
+    if (minutes > 99) minutes = 99;
+    delay(200);
+  }
+
+  // Decrease Time (fixed logic)
+  if (dec == LOW && lastDec == HIGH && !running && !timeUp) {
+    int totalSeconds = minutes * 60 + seconds;
+    if (totalSeconds > 0) {
+      totalSeconds--;
+      minutes = totalSeconds / 60;
+      seconds = totalSeconds % 60;
+    }
+    delay(200);
+  }
+
+  lastStartStop = startStop;
+  lastInc = inc;
+  lastDec = dec;
+
+  // Countdown Logic
+  if (running && millis() - lastUpdate >= 1000) {
+    lastUpdate = millis();
+    if (minutes == 0 && seconds == 0) {
+      running = false;
+      timeUp = true;
+      digitalWrite(ledPin, HIGH);
+      lcd.setCursor(0, 1);
+      lcd.print("   TIME'S UP!   ");
+    } else {
+      if (seconds == 0) {
+        seconds = 59;
+        minutes--;
+      } else {
+        seconds--;
+      }
+    }
+  }
+
+  // Display Update
+  lcd.setCursor(0, 0);
+  lcd.print("Timer: ");
+  if (minutes < 10) lcd.print("0");
+  lcd.print(minutes);
+  lcd.print(":");
+  if (seconds < 10) lcd.print("0");
+  lcd.print(seconds);
+  lcd.print("   ");
+}
+
+</code></pre></li>
+  </ul>
+
+
+
+<h4>Next Steps/Improvements:</h4>
+<p class = "margin"></p>
+The overall code works well but for the final project itself I need to add in some features. First, add in a reset button because even though the one on the board works it won't me exposed on the final product. Then I also need to add in to the overall system a speaker. The code 
 
 </div>
 </xmp>
